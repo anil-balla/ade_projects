@@ -142,4 +142,8 @@ def bronze_audit_log():
 
 # COMMAND ----------
 
-Dandam ra dootha
+Dandam ra babu
+
+# COMMAND ----------
+
+na sav nenu sasta
