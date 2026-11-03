@@ -1,0 +1,80 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText5",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText6",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText7",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "exists1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ACCOUNT_NO as string,",
+				"          STATUS_CD as string,",
+				"          BILL_ST_CD as string,",
+				"          BILL_CYCLE_CODE as string,",
+				"          LEGAL_ENTITY_CODE as string,",
+				"          CURRENT_BALANCE as string,",
+				"          LEDGER_BALANCE as string,",
+				"          LAST_PAY_DT as string,",
+				"          LAST_BILLING_RUN_DT as string,",
+				"          BILL_MEDIA_CD as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          ACCOUNT_NO as string,",
+				"          STATUS_CD as string,",
+				"          BILL_ST_CD as string,",
+				"          BILL_CYCLE_CODE as string,",
+				"          LEGAL_ENTITY_CODE as string,",
+				"          CURRENT_BALANCE as string,",
+				"          LEDGER_BALANCE as string,",
+				"          LAST_PAY_DT as string,",
+				"          LAST_BILLING_RUN_DT as string,",
+				"          BILL_MEDIA_CD as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source1, source2 exists(source1@ACCOUNT_NO == source2@ACCOUNT_NO,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
+				"exists1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

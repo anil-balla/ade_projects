@@ -1,0 +1,54 @@
+{
+	"name": "Json4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage7",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "sales",
+				"fileSystem": "project-hrcm"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"ACCOUNT_NO": {
+					"type": "string"
+				},
+				"ST": {
+					"type": "string"
+				},
+				"BI": {
+					"type": "string"
+				},
+				"BIL": {
+					"type": "string"
+				},
+				"LEGAL_ENTI": {
+					"type": "string"
+				},
+				"CURRENT_BALANCE": {
+					"type": "string"
+				},
+				"LEDGER_BALANCE": {
+					"type": "string"
+				},
+				"LAST_PAY_": {
+					"type": "string"
+				},
+				"LAST_BILL": {
+					"type": "string"
+				},
+				"BILL_MEDIA                                                                                                           ": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,167 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText4",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Electronics",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "Electronics",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "Electronics",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
+				}
+			],
+			"transformations": [
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderID as string,",
+				"          CustomerID as string,",
+				"          CustomerName as string,",
+				"          Country as string,",
+				"          City as string,",
+				"          Product as string,",
+				"          Category as string,",
+				"          OrderDate as string,",
+				"          Quantity as string,",
+				"          UnitPrice as string,",
+				"          OrderStatus as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 sort(desc(OrderDate, true)) ~> sort1",
+				"sort1 select(mapColumn(",
+				"          CustomerID,",
+				"          CustomerName,",
+				"          Country,",
+				"          City,",
+				"          OrderID,",
+				"          Product,",
+				"          Category,",
+				"          OrderDate,",
+				"          Quantity,",
+				"          UnitPrice",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(Categ = upper(Category)) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          CustomerID,",
+				"          CustomerName,",
+				"          Country,",
+				"          City,",
+				"          OrderID,",
+				"          Product,",
+				"          Category,",
+				"          OrderDate,",
+				"          Quantity",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 split(equals(Category,\"Electronics\"),",
+				"     equals(Category,\"Accessories\"),",
+				"     disjoint: false) ~> split1@(Electronics, Acessories, others)",
+				"split1@Electronics sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          OrderID as integer,",
+				"          CustomerID as string,",
+				"          CustomerName as string,",
+				"          Country as string,",
+				"          City as string,",
+				"          Product as string,",
+				"          Category as string,",
+				"          OrderDate as string,",
+				"          Quantity as integer,",
+				"          UnitPrice as integer,",
+				"          OrderStatus as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"split1@Acessories sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          OrderID as integer,",
+				"          CustomerID as string,",
+				"          CustomerName as string,",
+				"          Country as string,",
+				"          City as string,",
+				"          Product as string,",
+				"          Category as string,",
+				"          OrderDate as string,",
+				"          Quantity as integer,",
+				"          UnitPrice as integer,",
+				"          OrderStatus as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2",
+				"split1@others sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          OrderID as integer,",
+				"          CustomerID as string,",
+				"          CustomerName as string,",
+				"          Country as string,",
+				"          City as string,",
+				"          Product as string,",
+				"          Category as string,",
+				"          OrderDate as string,",
+				"          Quantity as integer,",
+				"          UnitPrice as integer,",
+				"          OrderStatus as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink3"
+			]
+		}
+	}
+}

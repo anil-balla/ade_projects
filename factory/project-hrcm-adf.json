@@ -1,0 +1,15 @@
+{
+	"name": "project-hrcm-adf",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5b27ba2b-52bb-44c7-a2bb-9a28bc62626d",
+		"tenantId": "4861f6be-c591-493e-8c08-6c09b17891ad"
+	}
+}

@@ -1,0 +1,39 @@
+{
+	"name": "AzureSql_insert",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "store_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "amount",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "sale_date",
+				"type": "date"
+			},
+			{
+				"name": "load_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Sales_Daily_Bronze"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
