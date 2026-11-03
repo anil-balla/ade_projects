@@ -1,0 +1,57 @@
+{
+	"name": "Electronics",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "parquetoutput",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "output-data",
+				"fileSystem": "project-hrcm"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"OrderID": {
+					"type": "integer"
+				},
+				"CustomerID": {
+					"type": "string"
+				},
+				"CustomerName": {
+					"type": "string"
+				},
+				"Country": {
+					"type": "string"
+				},
+				"City": {
+					"type": "string"
+				},
+				"Product": {
+					"type": "string"
+				},
+				"Category": {
+					"type": "string"
+				},
+				"OrderDate": {
+					"type": "string"
+				},
+				"Quantity": {
+					"type": "integer"
+				},
+				"UnitPrice": {
+					"type": "integer"
+				},
+				"OrderStatus": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

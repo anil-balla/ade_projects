@@ -1,0 +1,66 @@
+{
+	"name": "DelimitedText12",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage7",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "prdocs",
+				"folderPath": "output-data",
+				"fileSystem": "project-hrcm"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ACCOUNT_NO",
+				"type": "String"
+			},
+			{
+				"name": "STATUS_CD",
+				"type": "String"
+			},
+			{
+				"name": "BILL_ST_CD",
+				"type": "String"
+			},
+			{
+				"name": "BILL_CYCLE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "LEGAL_ENTITY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CURRENT_BALANCE",
+				"type": "String"
+			},
+			{
+				"name": "LEDGER_BALANCE",
+				"type": "String"
+			},
+			{
+				"name": "LAST_PAY_DT",
+				"type": "String"
+			},
+			{
+				"name": "LAST_BILLING_RUN_DT",
+				"type": "String"
+			},
+			{
+				"name": "BILL_MEDIA_CD",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

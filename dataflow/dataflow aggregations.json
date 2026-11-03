@@ -1,0 +1,81 @@
+{
+	"name": "dataflow aggregations",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "alterdataflows",
+						"type": "DatasetReference"
+					},
+					"name": "EmployeesData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderID as short,",
+				"          OrderDate as date,",
+				"          Region as string,",
+				"          Product as string,",
+				"          Category as string,",
+				"          SalesRep as string,",
+				"          Quantity as short,",
+				"          UnitPrice as short,",
+				"          TotalAmount as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EmployeesData",
+				"EmployeesData alterRow(upsertIf(true())) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          OrderID as integer,",
+				"          OrderDate as date,",
+				"          Region as string,",
+				"          Product as string,",
+				"          Category as string,",
+				"          SalesRep as string,",
+				"          Quantity as integer,",
+				"          UnitPrice as decimal(10,2),",
+				"          TotalAmount as decimal(12,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['OrderID'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          OrderID,",
+				"          OrderDate,",
+				"          Region,",
+				"          Product,",
+				"          Category,",
+				"          SalesRep,",
+				"          Quantity,",
+				"          UnitPrice,",
+				"          TotalAmount",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
